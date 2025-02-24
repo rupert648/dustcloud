@@ -1,0 +1,25 @@
+[package]
+name = "dustcloud"
+version = "0.1.0"
+edition = "2021"
+authors = ["Your Name <your.email@example.com>"]
+description = "A CLI tool for monitoring DNS requests routed through Cloudflare on macOS"
+
+[dependencies]
+# Network packet capture
+pcap = "1.1.0"
+# DNS packet parsing
+dns-parser = "0.8.0"
+# CLI argument parsing
+clap = { version = "4.4", features = ["derive"] }
+# Error handling
+anyhow = "1.0.75"
+# Terminal output formatting
+colored = "2.0.4"
+chrono = "0.4.39"
+libc = "0.2.170"
+once_cell = "1.20.3"
+
+[[bin]]
+name = "dustcloud"
+path = "src/main.rs"
