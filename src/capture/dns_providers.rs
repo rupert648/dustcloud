@@ -9,6 +9,7 @@ pub enum DnsProvider {
     Quad9,
     AdGuard,
     CleanBrowsing,
+    Unknown,
 }
 
 impl DnsProvider {
@@ -20,18 +21,19 @@ impl DnsProvider {
             DnsProvider::Quad9 => "quad9",
             DnsProvider::AdGuard => "adguard",
             DnsProvider::CleanBrowsing => "cleanbrowsing",
+            DnsProvider::Unknown => "unknown",
         }
     }
 
-    pub fn from_str(s: &str) -> Option<Self> {
+    pub fn from_str(s: &str) -> Self {
         match s.to_lowercase().as_str() {
-            "cloudflare" => Some(DnsProvider::Cloudflare),
-            "google" => Some(DnsProvider::Google),
-            "opendns" => Some(DnsProvider::OpenDNS),
-            "quad9" => Some(DnsProvider::Quad9),
-            "adguard" => Some(DnsProvider::AdGuard),
-            "cleanbrowsing" => Some(DnsProvider::CleanBrowsing),
-            _ => None,
+            "cloudflare" => DnsProvider::Cloudflare,
+            "google" => DnsProvider::Google,
+            "opendns" => DnsProvider::OpenDNS,
+            "quad9" => DnsProvider::Quad9,
+            "adguard" => DnsProvider::AdGuard,
+            "cleanbrowsing" => DnsProvider::CleanBrowsing,
+            _ => DnsProvider::Unknown,
         }
     }
 }
@@ -72,6 +74,15 @@ pub static DNS_PROVIDERS: Lazy<HashMap<DnsProvider, Vec<String>>> = Lazy::new(||
 
     map
 });
+
+pub fn get_provider_for_ip(ip: &str) -> DnsProvider {
+    for (provider, ips) in DNS_PROVIDERS.iter() {
+        if ips.contains(&ip.to_string()) {
+            return *provider;
+        }
+    }
+    DnsProvider::Unknown
+}
 
 pub fn get_filter_for_providers(providers: &[DnsProvider]) -> String {
     if providers.is_empty() {

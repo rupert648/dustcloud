@@ -1,4 +1,7 @@
-use crate::net::extract_ip_addresses;
+use crate::{
+    capture::dns_providers::{get_provider_for_ip, DnsProvider},
+    net::extract_ip_addresses,
+};
 use dns_parser::{Packet, QueryType, RData};
 
 #[derive(Debug)]
@@ -17,6 +20,7 @@ pub struct DnsAnswer {
 pub struct DnsPacket {
     pub query: Option<DnsQuery>,
     pub answers: Vec<DnsAnswer>,
+    pub provider: DnsProvider,
     pub source: String,
     pub destination: String,
 }
@@ -31,6 +35,7 @@ pub fn parse_packet(packet: &pcap::Packet) -> Option<DnsPacket> {
         return None; // Packet too small to contain DNS data
     }
     let (source, destination) = extract_ip_addresses(packet.data);
+    let provider = get_provider_for_ip(&source);
 
     // Parse DNS packet
     match Packet::parse(&packet.data[dns_data_start..]) {
@@ -90,6 +95,7 @@ pub fn parse_packet(packet: &pcap::Packet) -> Option<DnsPacket> {
             Some(DnsPacket {
                 query,
                 answers,
+                provider,
                 source,
                 destination,
             })

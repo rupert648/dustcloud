@@ -3,12 +3,16 @@ use std::path::PathBuf;
 
 use crate::capture::dns_providers::{list_all_providers, DnsProvider};
 
-#[derive(Parser, Debug)]
+#[derive(Parser, Debug, Clone)]
 #[command(author, version, about = "A tool for monitoring DNS requests on macOS")]
 #[command(
     long_about = "DustCloud monitors DNS traffic on your device, with a focus on requests routed through Cloudflare (1.1.1.1)"
 )]
 pub struct Args {
+    /// Disables the terminal UI
+    #[arg(long)]
+    pub disable_tui: bool,
+
     /// Capture all DNS traffic (port 53)
     #[arg(short = 'd', long)]
     pub dns_only: bool,
@@ -56,7 +60,7 @@ impl Args {
         // Validate dns_providers
         if let Some(providers) = &self.dns_providers {
             for provider in providers {
-                if DnsProvider::from_str(provider).is_none() {
+                if DnsProvider::from_str(provider) == DnsProvider::Unknown {
                     return Err(format!(
                         "Unknown DNS provider: {}. Available providers: {}",
                         provider,
@@ -78,10 +82,7 @@ impl Args {
     /// Convert dns_providers string list to DnsProvider enum list
     pub fn get_dns_providers(&self) -> Vec<DnsProvider> {
         if let Some(providers) = &self.dns_providers {
-            providers
-                .iter()
-                .filter_map(|p| DnsProvider::from_str(p))
-                .collect()
+            providers.iter().map(|p| DnsProvider::from_str(p)).collect()
         } else {
             vec![]
         }
