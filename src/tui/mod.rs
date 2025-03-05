@@ -206,7 +206,7 @@ pub fn run_tui(rx: Receiver<TxEvent>) -> Result<(), io::Error> {
             let chunks = Layout::default()
                 .direction(Direction::Horizontal)
                 .constraints([Constraint::Percentage(30), Constraint::Percentage(70)])
-                .split(f.size());
+                .split(f.area());
 
             // Stats area
             let stats_chunks = Layout::default()
