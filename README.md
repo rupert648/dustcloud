@@ -20,9 +20,6 @@ Note: Administrative privileges are required for network packet capture.
 
 ### Options
 
-- `--cloudflare-only`: Only capture DNS traffic to/from Cloudflare (1.1.1.1)
-- `--output <FILE>`: Optional output file to save results
-- `--verbose`: Enable verbose output
 
 ## License
 

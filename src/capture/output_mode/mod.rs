@@ -12,5 +12,7 @@ pub type Tx = Sender<TxEvent>;
 
 pub trait PacketHandler {
     fn handle_dns_packet(&self, d: DnsPacket, args: &Args);
+    // TODO: do more with other packets ?
+    #[allow(unused)]
     fn handle_network_packet(&self, d: &pcap::Packet, args: &Args);
 }

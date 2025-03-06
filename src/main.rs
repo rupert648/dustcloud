@@ -51,19 +51,11 @@ fn main() -> Result<()> {
             if let Some(dns_providers) = &args.dns_providers {
                 println!("  Set providers DNS only: {:?}", dns_providers);
             }
-            println!("  DNS traffic only: {}", args.dns_only);
             if let Some(device) = &args.device {
                 println!("  Network device: {}", device);
             } else {
                 println!("  Network device: <auto-detect>");
             }
-            if let Some(output) = &args.output {
-                println!("  Output file: {}", output.display());
-            }
-            if let Some(domains) = &args.filter_domains {
-                println!("  Filtering for domains: {}", domains.join(", "));
-            }
-            println!("  Output format: {}", args.format);
             println!("");
         }
 

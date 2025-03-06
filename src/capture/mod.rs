@@ -67,12 +67,9 @@ where
     loop {
         match cap.next_packet() {
             Ok(packet) => {
-                if args.dns_providers.is_some() || args.dns_only {
-                    if let Some(dns_packet) = dns::parse_packet(&packet) {
-                        capture_mode.handle_dns_packet(dns_packet, args);
-                    }
-                } else {
-                    capture_mode.handle_network_packet(&packet, args);
+                // TODO: handle more than just dns packets
+                if let Some(dns_packet) = dns::parse_packet(&packet) {
+                    capture_mode.handle_dns_packet(dns_packet, args);
                 }
             }
             Err(pcap::Error::TimeoutExpired) => {
