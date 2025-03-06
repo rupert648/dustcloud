@@ -1,6 +1,6 @@
 # DustCloud
 
-A Rust CLI tool for monitoring DNS requests on macOS, with a focus on traffic routed through Cloudflare (1.1.1.1).
+A Rust TUI tool for monitoring DNS traffic on macOS.
 
 ![Dustcloud Screenshot](./assets/dustcloud.png)
 
