@@ -2,6 +2,8 @@
 
 A Rust CLI tool for monitoring DNS requests on macOS, with a focus on traffic routed through Cloudflare (1.1.1.1).
 
+![Dustcloud Screenshot](./assets/dustcloud.png)
+
 ## Requirements
 
 - Rust and Cargo installed
@@ -14,7 +16,7 @@ To build DustCloud from source:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/dustcloud.git
+git clone https://github.com/rupert648/dustcloud.git
 cd dustcloud
 
 # Build the project
